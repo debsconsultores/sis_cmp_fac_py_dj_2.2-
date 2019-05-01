@@ -12,6 +12,28 @@
                         Nueva Categoría
                     </div>
                     <div class="dropdown-divider"></div>
+                    <div class="row">
+                        <div class="col-10">
+                            <div class="input-group">
+                                <input type="text" name="descripcion" maxlength="100" class="form-control" required id="id_descripcion" placeholder="Descripción"
+                                value="">
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="id_estado">Estado</label>
+                                <input type="checkbox" name="estado" class="form-control" id="id_estado" >
+                            </div>
+                        </div> 
+                        <!-- {{ form.as_p }} -->
+                    </div>
+                    <div class="dropdown-divider"></div>
+                    <div class="row">
+                        <div class="col">
+                            <button type="submit" class="btn btn-danger"><span class="fa fa-save"></span> Guardar</button>
+                            <a href="{% url 'inv:categoria_list' %}" class="btn btn-success"><span class="fa fa-undo"></span>Cancelar</a>
+                        </div>
+                    </div>
                 </div>
             </div>
             </div>
