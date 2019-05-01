@@ -21,8 +21,8 @@
     <!-- Card Body -->
     <div class="card-body">
       {% if not obj %}
-        No hay Categorías
-      {% endif %}
+      <div class="alert alert-info">No hay categorías</div>
+      {% else %}
       <table class="table table-striped table-hover">
           <thead>
               <th>Id</th>
@@ -48,9 +48,10 @@
               {% endfor %}
           </tbody>
       </table>
+      {% endif %}
     </div>
   </div>
 {% endblock %}
 
 {% block js_page %}
-{% enblock %}
+{% endblock %}
