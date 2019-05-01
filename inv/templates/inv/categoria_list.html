@@ -54,4 +54,10 @@
 {% endblock %}
 
 {% block js_page %}
+<script>
+  // Call the dataTables jQuery plugin
+  $(document).ready(function() {
+    $('.table').DataTable();
+  });
+</script>
 {% endblock %}
