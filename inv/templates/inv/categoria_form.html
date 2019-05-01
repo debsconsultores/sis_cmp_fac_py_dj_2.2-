@@ -4,25 +4,30 @@
 <form method="POST" class="form-inline">
     {% csrf_token %}
     <div class="col-xl-6 col-md-6 mb-6">
+        {% if obj %}
+        <div class="card border-left-warning shadow h-100 py-2">
+        {% else %}
         <div class="card border-left-success shadow h-100 py-2">
+        {% endif %}
             <div class="card-body">
             <div class="row no-gutters align-items-center">
                 <div class="col mr-2">
                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                        Nueva Categoría
+                        {% if obj %} Editar {% else %} Nueva {% endif %} Categoría
                     </div>
                     <div class="dropdown-divider"></div>
                     <div class="row">
                         <div class="col-10">
                             <div class="input-group">
                                 <input type="text" name="descripcion" maxlength="100" class="form-control" required id="id_descripcion" placeholder="Descripción"
-                                value="">
+                                value="{% if obj %} {{ obj.descripcion }} {% endif %}">
                             </div>
                         </div>
                         <div class="col-2">
                             <div class="form-group">
                                 <label for="id_estado">Estado</label>
-                                <input type="checkbox" name="estado" class="form-control" id="id_estado" checked >
+                                <input type="checkbox" name="estado" class="form-control" id="id_estado"
+                                {% if obj.estado %} checked {% endif %} >
                             </div>
                         </div> 
                         <!-- {{ form.as_p }} -->
