@@ -78,3 +78,9 @@ class SubCategoriaEdit(LoginRequiredMixin, generic.UpdateView):
     def form_valid(self, form):
         form.instance.um = self.request.user.id
         return super().form_valid(form)
+
+class SubCategoriaDel(LoginRequiredMixin, generic.DeleteView):
+    model=SubCategoria
+    template_name='inv/catalogos_del.html'
+    context_object_name='obj'
+    success_url=reverse_lazy("inv:subcategoria_list")
