@@ -1,0 +1,49 @@
+{% extends 'base/base.html' %}
+{% block page_content %}
+<form method="POST" class="form-inline">
+    <div class="col-xl-12 col-md-12 mb-12">
+        {% if obj %}
+        <div class="card border-left-warning shadow h-100 py-2">
+        {% else %}
+        <div class="card border-left-success shadow h-100 py-2">
+        {% endif %}
+        <div class="card-body">
+            <div class="row no-gutters align-items-center">
+            <div class="col mr-2">
+                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                    {% if obj %} Editar {% else %} Nueva {% endif %} Unidad de Medida
+                </div>
+                <div class="dropdown-divider"></div>
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-10">
+                        <div class="input-group">
+                            {{ form.descripcion }}
+                        </div>
+                    </div>
+                    <div class="col-2">
+                        <div class="input-group">
+                            <label for="id_estado">Estado</label>
+                            <!-- <input type="checkbox" name="estado" class="form-control" id="id_estado" {% if obj.estado %} checked {% endif %} > -->
+                            {{ form.estado }}
+                        </div>
+                    </div>        
+                    <!-- {{ form.as_p }} -->
+                </div>
+                <div class="dropdown-divider"></div>
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-danger"><span class="fa fa-save"></span> Guardar</button>
+                        <a href="{% url 'inv:um_list' %}" class="btn btn-success"><span class="fa fa-undo"></span>Cancelar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-auto">
+                <i class="far fa-calendar-plus fa-2x text-gray-300"></i>
+            </div>
+            </div>
+        </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
