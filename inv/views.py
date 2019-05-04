@@ -4,8 +4,9 @@ from django.urls import reverse_lazy
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Categoria,SubCategoria, Marca
-from .forms import CategoriaForm, SubCategoriaForm, MarcaForm
+from .models import Categoria,SubCategoria, Marca, UnidadMedida
+from .forms import CategoriaForm, SubCategoriaForm, MarcaForm, \
+    UMForm
 
 
 class CategoriaView(LoginRequiredMixin, generic.ListView):
@@ -140,3 +141,58 @@ def marca_inactivar(request, id):
 
     return render(request,template_name,contexto)
 
+
+class UMView(LoginRequiredMixin, generic.ListView):
+    model = UnidadMedida
+    template_name = "inv/um_list.html"
+    context_object_name = "obj"
+    login_url = "bases:login"
+
+
+class UMNew(LoginRequiredMixin,
+                   generic.CreateView):
+    model=UnidadMedida
+    template_name="inv/um_form.html"
+    context_object_name = 'obj'
+    form_class=UMForm
+    success_url= reverse_lazy("inv:um_list")
+    login_url = 'bases:login'
+
+    def form_valid(self, form):
+        form.instance.uc = self.request.user
+        print(self.request.user.id)
+        return super().form_valid(form)
+
+
+class UMEdit(LoginRequiredMixin,
+                   generic.UpdateView):
+    model=UnidadMedida
+    template_name="inv/um_form.html"
+    context_object_name = 'obj'
+    form_class=UMForm
+    success_url= reverse_lazy("inv:um_list")
+    login_url = 'bases:login'
+
+    def form_valid(self, form):
+        form.instance.um = self.request.user.id
+        print(self.request.user.id)
+        return super().form_valid(form)
+
+
+def um_inactivar(request, id):
+    um = UnidadMedida.objects.filter(pk=id).first()
+    contexto={}
+    template_name="inv/catalogos_del.html"
+
+    if not um:
+        return redirect("inv:um_list")
+    
+    if request.method=='GET':
+        contexto={'obj':um}
+    
+    if request.method=='POST':
+        um.estado=False
+        um.save()
+        return redirect("inv:um_list")
+
+    return render(request,template_name,contexto)
