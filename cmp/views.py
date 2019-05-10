@@ -3,6 +3,8 @@ from django.views import generic
 from django.urls import reverse_lazy
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.http import HttpResponse
+import json
 
 from .models import Proveedor
 from cmp.forms import ProveedorForm
@@ -46,5 +48,12 @@ class ProveedorEdit(LoginRequiredMixin,
 def proveedorInactivar(request,id):
     template_name='cmp/inactivar_prv.html'
     contexto={}
+    prv = Proveedor.objects.filter(pk=id).first()
+
+    if not prv:
+        return HttpResponse('Proveedor no existe ' + str(id))
+
+    if request.method=='GET':
+        contexto={'obj':prv}
 
     return render(request,template_name,contexto)
