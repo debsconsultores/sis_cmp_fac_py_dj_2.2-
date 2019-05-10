@@ -41,3 +41,10 @@ class ProveedorEdit(LoginRequiredMixin,
         form.instance.um = self.request.user.id
         print(self.request.user.id)
         return super().form_valid(form)
+
+
+def proveedorInactivar(request,id):
+    template_name='cmp/inactivar_prv.html'
+    contexto={}
+
+    return render(request,template_name,contexto)
