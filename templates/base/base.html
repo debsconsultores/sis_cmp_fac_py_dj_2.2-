@@ -417,7 +417,6 @@
 
   <script src="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.js' %}"></script>
 
-  {% block js_page %} {% endblock %}
 
   {% block control_modal%}
   <script>
@@ -439,8 +438,19 @@
       $('#popup').modal('hide');
       return false;
     }
+
+    function mensaje(msg,color='green')
+    {
+      $.alert({
+        title:'',
+        theme:'material',
+        type:color,
+        content:msg
+      });
+    }
   </script>
   {% endblock%}
+  {% block js_page %} {% endblock %}
 </body>
 
 </html>
