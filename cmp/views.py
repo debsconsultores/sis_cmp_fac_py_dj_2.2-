@@ -56,4 +56,10 @@ def proveedorInactivar(request,id):
     if request.method=='GET':
         contexto={'obj':prv}
 
+    if request.method=='POST':
+        prv.estado=False
+        prv.save()
+        contexto={'obj':'OK'}
+        return HttpResponse('Proveedor Inactivado')
+
     return render(request,template_name,contexto)
