@@ -26,3 +26,47 @@
       </form>
   </div>
 </div>
+
+<script>
+$(document).ready(function(){
+
+  var token = $('input[name=csrfmiddlewaretoken]').val();
+  $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!(/^http:.*/.test(settings.url) || /^https:.*/.test(settings.url))) {
+                xhr.setRequestHeader("X-CSRFToken", token);
+            }
+        }
+    });
+
+  $("#btnInactivar").click(function(e){
+      e.preventDefault();
+      //alert("Probando");
+
+      var id = {{ obj.id }};
+      var template="{% url 'cmp:proveedor_inactivar' obj.id %}";
+      //template += id;
+      var data = {"id":id};
+      data = JSON.stringify(data);
+
+      $.ajax({
+        type: "POST",
+        url: template,
+        data: data,
+        beforeSend: function(xhr,settings){
+          $.ajaxSettings.beforeSend(xhr,settings);
+        },
+        success: function(response){
+          console.log(response);
+          cerrar_modal();
+          alert(response);
+        },
+        error: function(jqXHR, textStatus, errorThrow){
+          console.log(textStatus, errorThrow);
+          cerrar_modal();
+        }
+      });
+  });
+
+});
+</script>
