@@ -461,7 +461,7 @@
 
     {% if messages %}
       {% for message in messages %}
-        //console.log("{{ message.tags }}");
+        console.log("{{ message.tags }}");
         mensaje("{{ message }}","{{ message.tags }}");
       {% endfor %}
     {% endif %}
