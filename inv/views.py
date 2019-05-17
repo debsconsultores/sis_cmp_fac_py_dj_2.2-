@@ -12,6 +12,8 @@ from .models import Categoria,SubCategoria, Marca, UnidadMedida, \
 from .forms import CategoriaForm, SubCategoriaForm, MarcaForm, \
     UMForm, ProductoForm
 
+from bases.views import SinPrivilegios
+
 
 class CategoriaView(LoginRequiredMixin, PermissionRequiredMixin, \
     generic.ListView):
@@ -57,7 +59,8 @@ class CategoriaDel(LoginRequiredMixin, generic.DeleteView):
     context_object_name='obj'
     success_url=reverse_lazy("inv:categoria_list")
 
-class SubCategoriaView(LoginRequiredMixin, PermissionRequiredMixin, \
+
+class SubCategoriaView(LoginRequiredMixin, SinPrivilegios, \
     generic.ListView):
     permission_required = "inv.view_subcategoria"
     model = SubCategoria
@@ -98,7 +101,9 @@ class SubCategoriaDel(LoginRequiredMixin, generic.DeleteView):
     success_url=reverse_lazy("inv:subcategoria_list")
 
 
-class MarcaView(LoginRequiredMixin, generic.ListView):
+class MarcaView(LoginRequiredMixin,SinPrivilegios,\
+     generic.ListView):
+    permission_required = "inv.view_marca"
     model = Marca
     template_name = "inv/marca_list.html"
     context_object_name = "obj"
