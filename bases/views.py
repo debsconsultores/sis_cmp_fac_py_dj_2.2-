@@ -7,7 +7,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin,\
 from django.views import generic
 
 
-class SinPrivilegios(PermissionRequiredMixin):
+class SinPrivilegios(LoginRequiredMixin, PermissionRequiredMixin):
+    login_url = 'bases:login'
     raise_exception=False
     redirect_field_name="redirecto_to"
 
@@ -23,5 +24,6 @@ class Home(LoginRequiredMixin, generic.TemplateView):
     login_url='bases:login'
 
 
-class HomeSinPrivilegios(generic.TemplateView):
+class HomeSinPrivilegios(LoginRequiredMixin, generic.TemplateView):
+    login_url = "bases:login"
     template_name="bases/sin_privilegios.html"
