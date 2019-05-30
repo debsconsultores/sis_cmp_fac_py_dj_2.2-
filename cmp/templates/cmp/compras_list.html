@@ -46,7 +46,7 @@
           <td>{{ item.total }}</td>
           <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
           <td>
-            <a class="btn btn-warning btn-circle" href="#"><i class="far fa-edit"></i></a>
+            <a class="btn btn-warning btn-circle" href="{% url 'cmp:compras_edit' item.id %}"><i class="far fa-edit"></i></a>
           </td>
         </tr>
         {% endfor %}

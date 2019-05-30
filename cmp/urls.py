@@ -12,4 +12,5 @@ urlpatterns = [
 
     path('compras/',ComprasView.as_view(), name="compras_list"),
     path('compras/new',compras, name="compras_new"),
+    path('compras/edit/<int:compra_id>',compras, name="compras_edit"),
 ]
