@@ -228,6 +228,20 @@
             calcular_detalle();
         });
 
+        /*Validar Envío de Detalle */
+        $("#frmCompras").submit(function(e){
+            if($('#id_total_detalle').val()==0 || $('#id_id_producto').val()==0 ){
+                e.preventDefault();
+                //alert("No ha agregado producto o está sin cantidades");
+                $.alert({
+                        type:'red',
+                        title:'',
+                        content:'No ha agregado producto o está sin cantidades'
+                        })
+            }
+        });
+        /*Fin Validar Envío de Detalle */
+
     });
 
     function selectProducto(id,descripcion)
