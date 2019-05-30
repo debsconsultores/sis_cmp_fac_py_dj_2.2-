@@ -170,7 +170,7 @@
                                                 <td>{{ item.descuento }}</td>
                                                 <td>{{ item.total }}</td>
                                                 <td>
-                                                    <button class="btn btn-danger btn-circle"><i class="fas fa-trash-alt"></i></button>
+                                                    <button class="btn btn-danger btn-circle" onclick="return abrir_modal('{% url 'cmp:compras_del' encabezado.pk item.id %}')"><i class="fas fa-trash-alt"></i></button>
                                                 </td>
                                                 </tr>
                                                 {% endfor %}
