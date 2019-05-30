@@ -20,7 +20,7 @@ class ComprasEncForm(forms.ModelForm):
     fecha_compra = forms.DateInput()
     fecha_factura = forms.DateInput()
     
-    class Mega:
+    class Meta:
         model=ComprasEnc
         fields=['proveedor','fecha_compra','observacion',
             'no_factura','fecha_factura','sub_total',

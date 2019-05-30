@@ -1,0 +1,227 @@
+{% extends 'base/base.html'%}
+{% block page_content %}
+    <form method="post" id="frmCompras">
+        {% csrf_token %}
+        <div class="col-xl-12 col-md-12 mb-12">
+            {% if encabezado %}
+            <div class="card border-left-warning shadow h-100 py-2">
+            {% else %}
+            <div class="card border-left-success shadow h-100 py-2">
+            {% endif %}
+                <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    {% if encabezado %} Editar {% else %} Nueva {% endif %} Compra
+                                </div>
+                                <div class="dropdown-divider"></div>
+                                <div class="row">
+                                    <!-- Inicio Izquierda -->
+                                    <div class="col-6">
+                                        <!-- Inicio Encabezado -->
+                                        <div class="form-group row">
+                                            <label for="staticEmail" class="col-sm-2 col-form-label">Proveedor:</label>
+                                            <div class="col-sm-10">
+                                              {{ form_enc.proveedor }}
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="id_fecha_compra">Fecha Compra:</label>
+                                                    {{form_enc.fecha_compra}}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="id_descripcion">Descripción:</label>
+                                                    {{form_enc.observacion}}
+                                                </div>
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="form-group">
+                                                    <label for="id_fecha_compra">No. Factura:</label>
+                                                    {{form_enc.no_factura}}
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="id_descripcion">Fecha Factura:</label>
+                                                    {{form_enc.fecha_factura}}
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="Sub Total">Sub Total:</label>
+                                                    </div>
+                                                    <div class="col">
+                                                        {{ form_enc.sub_total }}
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="sub_total">Descuento:</label>
+                                                    </div>
+                                                    <div class="col">
+                                                        {{ form_enc.descuento }}
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <label for="total">Total:</label>
+                                                    </div>
+                                                    <div class="col">
+                                                        {{ form_enc.total }}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Fin Encabezado -->
+                                    </div>
+                                    <!-- Fin Izquierda -->
+                                    <!-- Inicio Derecha -->
+                                    <div class="col-6">
+                                        <div class="row">
+                                            <div class="col">
+                                                <table class="table table-striped table-hover dt-responsive table-sm nowrap tbl-productos" style="width:100%">
+                                                    <thead>
+                                                        <th>Id</th>        
+                                                        <th class="all">Descripción</th>
+                                                        <th class="all">Acciones</th>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for item in productos %}
+                                                        <tr>
+                                                        <td>{{ item.id }}</td>
+                                                        <td>{{ item.descripcion }}</td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-warning btn-circle" ><i class="far fa-hand-pointer"></i></button>
+                                                        </td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="id_id_producto" class="col-sm-3 col-form-label">Producto</label>
+                                            <div class="col-sm-2">
+                                                <input type="text" readonly class="form-control-plaintext" name="id_id_producto" id="id_id_producto" value="" required>
+                                            </div>
+                                            <div class="col-sm-7">
+                                                <input type="text" readonly class="form-control-plaintext" id="id_descripcion_producto" value="" required>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="id_cantidad_detalle" class="col-sm-2 col-form-label">Cant.:</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control" name="id_cantidad_detalle" id="id_cantidad_detalle" value="00" required>
+                                            </div>
+                                            <label for="id_precio_detalle" class="col-sm-2 col-form-label">Precio:</label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control" name="id_precio_detalle" id="id_precio_detalle" value="00" required>
+                                            </div>
+                                            <label for="id_descuento_detalle" class="col-sm-2 col-form-label">Desc.:</label>
+                                            <div class="col-sm-2">
+                                                <input type="text" class="form-control" name="id_descuento_detalle" id="id_descuento_detalle" value="00">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label for="id_sub_total_detalle" class="col-sm-2 col-form-label">S. Total:</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" readonly class="form-control-plaintext" name="id_sub_total_detalle" id="id_sub_total_detalle" value="00">
+                                            </div>
+                                            <label for="id_total_detalle" class="col-sm-2 col-form-label">Total:</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" readonly class="form-control-plaintext col-sm-10" name="id_total_detalle" id="id_total_detalle" value="00">
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <button type="button" class="btn btn-sm col-sm-2" ><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+                                            </div>
+                                        </div>
+                                        <!-- Botones -->
+                                        <div class="dropdown-divider"></div>
+                                        <div class="row">
+                                            <div class="col">
+                                                <button type="submit" class="btn btn-danger"><span class="fa fa-save"></span> Guardar</button>
+                                                <a href="{% url 'cmp:compras_list' %}" class="btn btn-success"><i class="far fa-hand-point-left"></i> Cancelar</a>
+                                            </div>
+                                        </div>
+                                        <!-- Fin Botones -->
+                                    </div>
+                                    <!-- Fin Derecha -->
+                                </div>
+                                <!-- Inicio Detalle -->
+                                <div class="row">
+                                    <div class="col">
+                                        <table class="table table-striped table-hover dt-responsive nowrap" style="width:100%">
+                                            <thead>
+                                                <th>Producto</th>        
+                                                <th>Cantidad</th>
+                                                <th>Precio</th>
+                                                <th>Sub Total</th>
+                                                <th>Desc.</th>
+                                                <th>Total</th>
+                                                <th class="all">Acciones</th>
+                                            </thead>
+                                            <tbody>
+                                                {% for item in detalle %}
+                                                <tr>
+                                                <td>{{ item.producto }}</td>
+                                                <td>{{ item.cantidad }}</td>
+                                                <td>{{ item.cantidad }}</td>
+                                                <td>{{ item.sub_total }}</td>
+                                                <td>{{ item.descuento }}</td>
+                                                <td>{{ item.total }}</td>
+                                                <td>
+                                                    <button class="btn btn-danger btn-circle"><i class="fas fa-trash-alt"></i></button>
+                                                </td>
+                                                </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <!-- Fin Detalle -->
+                            </div>
+                        </div>
+                </div>
+        </div>
+    </form>
+{% endblock %}
+{% block js_page %}
+<script>
+    $(function () {
+
+        $("#id_fecha_compra, #id_fecha_factura").datetimepicker({
+            format: 'Y-m-d',
+            timepicker:false
+        });
+
+        $("#sidebarToggle").click();
+
+        $('.table').DataTable({
+            "pageLength": 2,
+            "language": {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "<span class='fa fa-angle-double-left'></span>",
+                "sLast": "<span class='fa fa-angle-double-right'></span>",
+                "sNext": "<span class='fa fa-angle-right'></span>",
+                "sPrevious": "<span class='fa fa-angle-left'></span>"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+            }
+        });
+    });
+</script>
+{% endblock %}
