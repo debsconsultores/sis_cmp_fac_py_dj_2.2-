@@ -90,7 +90,8 @@
                                                         <td>{{ item.id }}</td>
                                                         <td>{{ item.descripcion }}</td>
                                                         <td>
-                                                            <button type="button" class="btn btn-warning btn-circle" ><i class="far fa-hand-pointer"></i></button>
+                                                            <button type="button" class="btn btn-warning btn-circle"
+                                                            onclick="selectProducto({{item.id}},'{{item.descripcion}}')" ><i class="far fa-hand-pointer"></i></button>
                                                         </td>
                                                         </tr>
                                                         {% endfor %}
@@ -131,7 +132,7 @@
                                                 <input type="text" readonly class="form-control-plaintext col-sm-10" name="id_total_detalle" id="id_total_detalle" value="00">
                                             </div>
                                             <div class="col-sm-1">
-                                                <button type="button" class="btn btn-sm col-sm-2" ><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
+                                                <button type="button" class="btn btn-sm col-sm-2" onclick="clear_Detail();"><i class="fa fa-minus-circle" aria-hidden="true"></i></button>
                                             </div>
                                         </div>
                                         <!-- Botones -->
@@ -222,6 +223,76 @@
             }
             }
         });
+
+        $('#id_cantidad_detalle,#id_precio_detalle,#id_descuento_detalle').change(function(){
+            calcular_detalle();
+        });
+
     });
+
+    function selectProducto(id,descripcion)
+    {
+        $("#id_cantidad_detalle").val(0);
+        $('#id_precio_detalle').val(0);
+        $('#id_descuento_detalle').val(0);
+
+        $('#id_sub_total_detalle').val(0);
+        $('#id_total_detalle').val(0);
+
+        $("#id_id_producto").val(+id);
+        $('#id_descripcion_producto').val(descripcion);
+        $('#id_cantidad_detalle').focus();
+        $('#id_cantidad_detalle').select();
+
+        $('.table').DataTable().search('').draw();
+    }
+
+    function calcular_detalle()
+    {
+        var cant,prec,desc,stotal,total;
+
+        cant = $("#id_cantidad_detalle").val();
+        cant = cant==="" ? 0 : +cant;
+        cant = cant<0 ? 0 : cant;
+
+        prec =$('#id_precio_detalle').val();
+        prec = prec==="" ? 0 : +prec;
+        prec = prec<0 ? 0 : prec;
+
+        desc = $('#id_descuento_detalle').val();
+        desc = desc==="" ? 0 : +desc;
+        desc = desc<0 ? 0 : desc;
+
+        desc = desc>(cant * prec) ? 0 : desc;
+
+        stotal = cant * prec;
+        total  = stotal - desc;
+
+        $('#id_cantidad_detalle').val(cant);
+        $('#id_precio_detalle').val(prec);
+        $('#id_descuento_detalle').val(desc);
+
+        $('#id_sub_total_detalle').val(stotal);
+        $('#id_total_detalle').val(total);
+
+    }
+
+    function clear_Detail(){
+        $('#id_cantidad_detalle').val(0);
+        $('#id_precio_detalle').val(0);
+        $('#id_descuento_detalle').val(0);
+
+        $('#id_sub_total_detalle').val(0);
+        $('#id_total_detalle').val(0);
+
+        $('#id_id_producto').val('');
+        $('#id_descripcion_producto').val('');
+
+        $('.table').DataTable().search('').draw();
+
+        $("#id_proveedor").focus();
+    }
+
+    $("#id_proveedor").focus();
 </script>
 {% endblock %}
