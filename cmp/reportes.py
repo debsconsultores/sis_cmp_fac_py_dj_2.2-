@@ -65,7 +65,7 @@ def imprimir_compra(request, compra_id):
     template_path = 'cmp/compras_print_one.html'
     today = timezone.now()
     
-    enc = ComprasEnc.objects.filter(id==compra_id)
+    enc = ComprasEnc.objects.filter(id=compra_id).first()
     if enc:
         detalle = ComprasDet.objects.filter(compra__id=compra_id)
     else:

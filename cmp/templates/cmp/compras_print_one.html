@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Listado de Compras</title>
+
+    <style type="text/css">
+    @page {
+        size: letter;
+        margin: 1cm;
+    }
+
+    .table td .numero{
+        text-align: center;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h4>Sistema de Compras DEBS</h4>
+            </div>
+
+            <div class="list-group">
+                <p>No. Compra: {{ encabezado.id}} </p>
+                <table class="">
+                    <tbody>
+                        <tr>
+                            <td>Proveedor:</td>
+                            <td>{{ encabezado.proveedor}}</td>
+                            <td>Fecha Compra:</td>
+                            <td>{{ encabezado.fecha_compra|date:"d/m/Y"}}</td>
+                        </tr>
+                        <tr>
+                            <td>No. Factura</td>
+                            <td>{{encabezado.no_factura}}</td>
+                            <td>Fecha Factura:</td>
+                            <td>{{ encabezado.fecha_factura|date:"d/m/Y"}}</td>
+                        </tr>
+                        <tr>
+                            <td>Observación:</td>
+                            <td colspan="3">{{encabezado.Observación}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr>
+            </div>
+
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Sub total</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Sub total</th>
+                        <th>Descuento</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in detalle %}
+                    <tr>
+                        <td><span class="small">{{ item.producto }}</span></td>
+                        <td class="numero">{{ item.cantidad }}</td>
+                        <td class="numero">{{ item.precio_prv }}</td>
+                        <td class="numero">{{ item.sub_total }}</td>
+                        <td class="numero">{{ item.descuento }}</td>
+                        <td class="numero">{{ item.total }}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><h4>Sub Total</h4></td>
+                            <td class="numero"><h4>{{ encabezado.sub_total}}</h4></td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><h4>Descuento</h4></td>
+                            <td class="numero"><h4>{{ encabezado.descuento}}</h4></td>
+                          </tr>
+                          <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td><h4>Total</h4></td>
+                            <td class="numero"><h4>{{ encabezado.total}}</h4></td>
+                          </tr>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
