@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Listado de Compras</title>
+
+    <style type="text/css">
+    @page {
+        size: letter;
+        margin: 1cm;
+    }
+    .table {
+        width: 100%;
+        max-width: 100%;
+        margin-bottom: 5px;
+        background-color: #fff;
+    }
+    .table th,
+    .table td {
+        padding: 5px;
+        vertical-align: top;
+        border-top: 1px solid #000;
+        text-align: center;
+    }
+    .table thead th {
+        vertical-align: bottom;
+        border-bottom: 2px solid #000;
+    }
+    .table tbody + tbody {
+        border-top: 2px solid #000;
+    }
+    .table .table {
+        background-color: #fff;
+    }
+    .list-group {
+        display: block;
+        width: 100%;
+        list-style: none;
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+    .list-group p {
+        width: 100%;
+        height: 20px;
+        line-height: 20px;
+        list-style: none;
+        font-size: 1.1em;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h4>Sistema de Compras DEBS</h4>
+                <h3>Reporte de Compras al {{ today|date:"d/m/Y" }}</h3>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>No. Compra</th>
+                        <th>Proveedor</th>
+                        <th>Fecha</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in obj %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.proveedor }}</td>
+                        <td>{{ item.fecha_compra | date:"d/m/Y" }}</td>
+                        <td>{{ item.total }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
