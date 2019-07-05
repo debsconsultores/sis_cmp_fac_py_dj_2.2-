@@ -38,7 +38,14 @@
           <td>{{ item.apellidos }}</td>
           <td>{{item.tipo}}</td>
           <td>{{ item.celular }}</td>
-          <td>{{item.estado|yesno:"Activo,Inactivo"}}
+          <td onclick="inactivar({{item.id}})">{#item.estado|yesno:"Activo,Inactivo"#}
+            {% if item.estado %}
+              <i class="far fa-thumbs-up text-primary"></i>
+            {% else %}
+              <i class="far fa-thumbs-down text-danger"></i>
+            {% endif %}
+
+
           </td>
           <td>
             <button class="btn btn-warning btn-circle" onclick="return abrir_modal('{% url 'fac:cliente_edit' item.id %}')"><i class="far fa-edit"></i></button>
@@ -53,6 +60,35 @@
 {% endblock %}
 {% block js_page %}
 <script>
+  function inactivar(id)
+  {
+    var data = {id:id};
+    data = JSON.stringify(data);
+    var token = '{{csrf_token}}';
+    alert(token);
+    alert(id);
+    
+    $.ajax({
+      headers : {"X-CSRFToken": token},
+      type:"POST",
+      url:"/fac/cliente/estado/"+id,
+      data: data,
+      success: function(response){
+        if(response==="OK")
+        {
+          location.reload(true);
+        }
+        else{
+          mensaje("Error Intentado Cambiar Estado a Cliente");
+        }
+      },
+      error: function(jqXHR, textStatus, errorThrow){
+        console.log(textStatus, errorThrow);
+        mensaje(errorThrow,'red');
+        cerrar_modal();
+      }
+    });
+  }
 // Call the dataTables jQuery plugin
 $(document).ready(function() {
   $('.table').DataTable();
