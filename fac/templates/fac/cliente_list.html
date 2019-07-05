@@ -65,13 +65,13 @@
     var data = {id:id};
     data = JSON.stringify(data);
     var token = '{{csrf_token}}';
-    alert(token);
-    alert(id);
+    // alert(token);
+    // alert(id);
     
     $.ajax({
       headers : {"X-CSRFToken": token},
       type:"POST",
-      url:"/fac/cliente/estado/"+id,
+      url:"/fac/clientes/estado/"+id,
       data: data,
       success: function(response){
         if(response==="OK")
