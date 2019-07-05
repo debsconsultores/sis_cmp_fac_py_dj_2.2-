@@ -1,9 +1,9 @@
 <div class="modal-dialog modal-lg">
     <div class="modal-content">
         {% if obj %}
-        <form role="form" action="{% url 'cmp:proveedor_edit' obj.pk %}" method="post"  class="form-inline">
+        <form role="form" action="{% url 'fac:cliente_edit' obj.pk %}" method="post"  class="form-inline">
         {% else %}
-        <form role="form" action="{% url 'cmp:proveedor_new' %}" method="post"  class="form-inline">
+        <form role="form" action="{% url 'fac:cliente_new' %}" method="post"  class="form-inline">
         {% endif %}
             <div class="col-xl-12 col-md-12 mb-12">
                 {% if obj %}
