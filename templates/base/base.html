@@ -28,6 +28,7 @@
   <!-- XDSoft DateTimePicker -->  
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css" integrity="sha256-DOS9W6NR+NFe1fUhEE0PGKY/fubbUCnOfTje2JMDw3Y=" crossorigin="anonymous" />  
 
+  <link rel="stylesheet" href="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.css">
 </head>
 
 <body id="page-top" class="bg-gradient-primary">
@@ -93,6 +94,12 @@
             
             {% if perms.cmp.view_proveedor %}
             <a class="collapse-item" href="{% url 'cmp:proveedor_list' %}">Proveedores</a>
+            {% endif %}
+
+            <h6 class="collapse-header">Catálogos de Facturación:</h6>
+            
+            {% if perms.fac.view_cliente %}
+            <a class="collapse-item" href="{% url 'fac:cliente_list' %}">Clientes</a>
             {% endif %}
           </div>
         </div>
@@ -439,6 +446,9 @@
   <script src="{% static 'base/vendor/jquery_confirm/jquery-confirm.min.js' %}"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js" integrity="sha256-FEqEelWI3WouFOo2VWP/uJfs1y8KJ++FLh2Lbqc8SJk=" crossorigin="anonymous"></script>  
+
+  <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table.min.js"></script>
+  <script src="https://unpkg.com/bootstrap-table@1.15.3/dist/bootstrap-table-locale-all.min.js"></script>
 
   <script>
     $(document).ready(function () {
