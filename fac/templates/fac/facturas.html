@@ -13,7 +13,21 @@
             <div class="row">
                 <!-- Sección Izquierda -->
                 <div class="col-lg-6">
-                    Sección Izquierda
+                    <div class="row">
+                        <div class="col-lg-1">No.</div>
+                        <div class="col-lg-4">
+                            <input type="text" name="enc_id" id="enc_id" readonly class="form-control">
+                        </div>
+                        <div class="col-lg-2">Cliente</div>
+                        <div class="col-lg-5 form-group">
+                            <select name="enc_cliente" id="enc_cliente">
+                                <option value="0">Seleccione Clinte</option>
+                                {% for item in clientes %}
+                                    <option value="{{item.id}}">{{ item.nombres }} {{item.apellidos}} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <!-- Fin Sección Izquierda -->
                 <!-- Sección Derecha -->
@@ -37,6 +51,10 @@
 <script>
     $(function () {
         $("#sidebarToggle").click();
+        $("#enc_cliente").select2({
+            placeholder:"Seleccione Cliente",
+            allowClear:true
+        });
     });
 </script>
 {% endblock %}
