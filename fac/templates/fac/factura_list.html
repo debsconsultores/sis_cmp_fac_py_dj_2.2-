@@ -1,0 +1,70 @@
+{% extends 'base/base.html' %}
+
+{% block page_content %}
+<div class="card shadow mb-4">
+  <!-- Card Header - Dropdown -->
+  <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+    <h6 class="m-0 font-weight-bold text-primary">Listado de Facturas</h6>
+    <!-- <div class="dropdown no-arrow">
+      <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+      </a>
+      <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in" aria-labelledby="dropdownMenuLink">
+        <div class="dropdown-header">Acciones:</div>
+        <a class="dropdown-item" onclick="return abrir_modal('{% url 'fac:cliente_new' %}')" href="#"><i class="far fa-calendar-plus"></i> Nuevo</a>
+      </div>
+    </div> -->
+  </div>
+  <!-- Card Body -->
+  <div class="card-body">
+    {% if not obj %}
+    <div class="alert alert-info">No Hay Facturas</div>
+    {% endif %}
+    <div class="buttons-toolbar">
+        <a class="dropdown-item" href="#"><i class="far fa-calendar-plus"></i> Nuevo</a>
+    </div>
+
+    <table 
+      id="table"
+      data-toggle="table"
+      data-pagination="true"
+      data-search="true"
+      data-show-columns="true"
+      data-show-toggle="true"
+      data-show-fullscreen="true"
+      data-toolbar=".buttons-toolbar"
+      data-locale="es-NI"
+    >
+    <thead>
+      <th data-sortable="true" data-field="id">No.</th>        
+      <th data-sortable="true" data-field="nombres">Cliente</th>
+      <th data-sortable="true" data-field="apellidos">Total</th>
+      <th data-field="estado">Estado</th>
+      <th class="all">Acciones</th>
+    </thead>
+    <tbody>
+      {% for item in obj%}
+      <tr>
+        <td>{{ item.id }}</td>
+        <td>{{ item.cliente }}</td>
+        <td>{{ item.total }}</td>
+        <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
+        <td>
+          <a href="#" class="href btn btn-warning btn-circle">
+              <i class="far fa-edit"></i>
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+
+
+    </table>
+  </div>
+</div>
+{% endblock %}
+{% block js_page %}
+<script>
+
+</script>
+{% endblock %}
