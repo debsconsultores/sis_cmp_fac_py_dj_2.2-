@@ -1,5 +1,5 @@
 ![Curso Sistema de Compra y Facturación con Pyton y Django](logo.png)
-# Curso Sistema de Compra y Facturación con Pyton y Django 🐍 
+# Curso Sistema de Compra y Facturación con Pyhon y Django 🐍 
 ##  🎖️ [Obténlo con 95% Descuento](http://bit.ly/DJFULL-BLOG12019)  🎖️
 
 ##### Código Fuente del Proyecto
