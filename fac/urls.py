@@ -1,7 +1,7 @@
 from django.urls import path, include
 
 from .views import ClienteView,ClienteNew,ClienteEdit,clienteInactivar, \
-    FacturaView
+    FacturaView, facturas
 
 urlpatterns = [
     path('clientes/',ClienteView.as_view(), name="cliente_list"),
@@ -10,6 +10,7 @@ urlpatterns = [
     path('clientes/estado/<int:id>',clienteInactivar, name="cliente_inactivar"),
 
     path('facturas/',FacturaView.as_view(), name="factura_list"),
+    path('facturas/new',facturas, name="factura_new")
 
 
 

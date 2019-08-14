@@ -72,3 +72,11 @@ class FacturaView(SinPrivilegios, generic.ListView):
     template_name = "fac/factura_list.html"
     context_object_name = "obj"
     permission_required="fac.view_facturaenc"
+
+
+@login_required(login_url='/login/')
+@permission_required('fac.change_facturasenc', login_url='bases:sin_privilegios')
+def facturas(request,id=None):
+    template_name='fac/facturas.html'
+    contexto={}
+    return render(request,template_name,contexto)
