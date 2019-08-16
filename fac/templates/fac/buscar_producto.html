@@ -1,0 +1,96 @@
+<div class="modal-dialog modal-lg">
+    <div class="modal-content">
+        <div class="col-xl-12 col-md-12 mb-12">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                    <div class="col mr-2">
+                        <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                            Buscar Producto
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        
+                        <div class="row">
+                                <table
+                                id="tblProducto"
+                                data-pagination="true"
+                                data-search="true"
+                                data-show-columns="true"
+                                data-show-fullscreen="true"
+                                data-locale="es-NI"
+                                >
+                                <thead>
+                                  <th data-sortable="true" data-field="id">Id</th>        
+                                  <th data-sortable="true" data-field="codigo">Código</th>
+                                  <th data-sortable="true" data-field="codigo_barra">Barra</th>
+                                  <th data-field="descripcion">Descripción</th>
+                                  <th data-field="existencia">Existencia</th>
+                                  <th data-field="precio">Precio</th>
+                                  <th class="all">Acciones</th>
+                                </thead>
+                                <tbody>
+                                  {% for item in obj%}
+                                  <tr>
+                                    <td>{{ item.id }}</td>
+                                    <td>{{ item.codigo }}</td>
+                                    <td>{{ item.codigo_barra }}</td>
+                                    <td>{{item.descripcion}}</td>
+                                    <td>{{item.existencia}}</td>
+                                    <td>{{item.precio}}</td>
+                                    <td>
+                                        {% if item.existencia > 0 and item.estado %}
+                                        <button class="btn btn-warning btn-circle" id="btnSelect" 
+                                        onclick="seleccionarProducto({{item.id}},'{{item.codigo}}','{{item.descripcion}}',{{item.precio}})">
+                                            <i class="far fa-hand-pointer"></i>
+                                        </button>
+                                        {% endif %}
+                                    </td>
+                                  </tr>
+                                  {% endfor %}
+                                </tbody>
+                              </table>
+                        </div>
+                        <div class="dropdown-divider"></div>
+                        <div class="row">
+                            <div class="col">
+                                <!-- <button type="submit" class="btn btn-danger"><span class="fa fa-save"></span> Guardar</button> -->
+                                <button type="button" id="btnCancelar" class="btn btn-success">
+                                        <!-- onclick="return cerrar_modal()" -->
+                                        Cancelar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        <i class="far fa-calendar-plus fa-2x text-gray-300"></i>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+{% block js_page %}
+<script>
+    $(function () {
+
+        $("#btnCancelar").click(function(e){
+            e.preventDefault();
+            cerrar_modal();
+
+        });
+    });
+    $('#tblProducto').bootstrapTable();
+
+    function seleccionarProducto(id,codigo,descripcion,precio){
+        $("#codigo").val(codigo);
+        $("#descripcion").val(descripcion);
+        $("#precio").val(precio);
+        $("#btnCancelar").click();
+        $("#codigo").select();
+        $("#codigo").focus();
+
+    }
+
+</script>
+{% endblock %}

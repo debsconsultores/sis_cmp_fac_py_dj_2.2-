@@ -11,6 +11,7 @@ from bases.views import SinPrivilegios
 
 from .models import Cliente, FacturaEnc, FacturaDet
 from .forms import ClienteForm
+import inv.views as inv
 
 class ClienteView(SinPrivilegios, generic.ListView):
     model = Cliente
@@ -91,3 +92,8 @@ def facturas(request,id=None):
 
 
     return render(request,template_name,contexto)
+
+
+class ProductoView(inv.ProductoView):
+    template_name="fac/buscar_producto.html" 
+
