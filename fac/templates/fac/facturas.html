@@ -154,6 +154,63 @@
 {% endblock %}
 {% block js_page %}
 <script>
+    function buscarProducto()
+    {
+        if ($("#enc_cliente").val()==="0" || $("#enc_cliente").val()===null){
+            mensaje("Cliente No Seleccionado",'red');
+            return false;
+        }
+
+        var codigo = $("#codigo").val();
+        if(codigo===""){
+            return false;
+        }
+
+        var path = "{% url 'api:producto_list' %}" + codigo;
+        $.ajax({
+            type:"GET",
+            url: path,
+            success: function(r){
+                console.log(r);
+                console.log(r.existencia);
+                console.log(r.estado);
+
+                if(r.existencia<=0 || !r.estado){
+                    mensaje("Producto No Tiene Existencia o está inactivo",'orange')
+                    $("#codigo").val("");
+                    $("#descripcion").val("");
+                    $("#precio").val("0.00");
+                    $("#codigo").focus();
+                    return false;
+                }
+
+                $("#codigo").val(r.codigo);
+                $("#descripcion").val(r.descripcion);
+                $("#precio").val(r.precio);
+                $("#cantidad").focus();
+
+            },
+            error: function(a,b,c){
+                console.log(a);
+                // console.log(b);
+                // console.log(c);
+                // console.log(a.status)
+                // console.log(a.responseText.detail);
+                // a.responseText["detail"]
+                // mensaje(c,'red');
+                if(a.status==404){
+                    mensaje("Producto -" + codigo + "- No Encontrado o No Existe",'red');
+                    $("#codigo").val("");
+                    $("#descripcion").val("");
+                    $("#precio").val("0.00");
+                    $("#codigo").focus();
+                }
+
+            }
+
+        });
+    }
+
     $(function () {
         $("#sidebarToggle").click();
         $('#enc_cliente').select2({
@@ -167,6 +224,12 @@
                 return false;
             }
             abrir_modal("{% url 'fac:factura_producto' %}");
+        });
+
+        $("#codigo").keypress(function(e){
+            if(e.keyCode===13){
+                buscarProducto();
+            }
         });
     });
 </script>
