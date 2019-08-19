@@ -98,10 +98,24 @@
                             <input type="number" class="form-control" name="precio" id="precio" placeholder="Precio" readonly>
                         </div>
                         <div class="col-lg-3">
-                            <input type="number" class="form-control" name="descuento" id="descuento" placeholder="Descuento">
+                            <input type="number" class="form-control" name="descuento_detalle" id="descuento_detalle" placeholder="Descuento">
                         </div>
                         <div class="col-lg-1">
                             <button type="button" class="btn btn-danger" id="btnGuardar"> <i class="far fa-plus-square"></i> </button>
+                        </div>
+                    </div>
+                    <div class="row p-1">
+                        <div class="col-lg-9 text-right">Sub Total</div>
+                        <div class="col-lg-3">
+                            <input type="number" class="form-control" name="sub_total_detalle" id="sub_total_detalle" placeholder="Sub Total"
+                             value="0.00" disabled>
+                        </div>
+                    </div>
+                    <div class="row p-1">
+                        <div class="col-lg-9 text-right">Total</div>
+                        <div class="col-lg-3">
+                            <input type="number" class="form-control" name="total_detalle" id="total_detalle" placeholder="Total"
+                             value="0.00" disabled>
                         </div>
                     </div>
                 </div>
@@ -154,6 +168,43 @@
 {% endblock %}
 {% block js_page %}
 <script>
+    function calcular_detalle()
+    {
+        var cant,prec,desc,stotal,total;
+
+        cant = $("#cantidad").val();
+        cant = cant==="" ? 0 : +cant;
+        cant = cant<0 ? 0 : cant;
+
+        prec =$('#precio').val();
+        prec = prec==="" ? 0 : +prec;
+        prec = prec<0 ? 0 : prec;
+
+        desc = $('#descuento_detalle').val();
+        desc = desc==="" ? 0 : +desc;
+        desc = desc<0 ? 0 : desc;
+
+        desc = desc>(cant * prec) ? 0 : desc;
+
+        stotal = cant * prec;
+        total  = stotal - desc;
+
+        $('#cantidad').val(cant);
+        $('#precio').val(prec);
+        $('#descuento_detalle').val(desc);
+
+        $('#sub_total_detalle').val(stotal);
+        $('#total_detalle').val(total);
+
+        console.log("Cantidad " + cant);
+        console.log("prec " + prec);
+        console.log("desc " + desc);
+
+        console.log("sub_total_detalle " + $('#sub_total_detalle').val());
+        console.log("total_detalle " + $('#total_detalle').val());
+
+    }
+
     function buscarProducto()
     {
         if ($("#enc_cliente").val()==="0" || $("#enc_cliente").val()===null){
@@ -230,6 +281,10 @@
             if(e.keyCode===13){
                 buscarProducto();
             }
+        });
+
+        $('#cantidad,#precio,#descuento_detalle').change(function(){
+            calcular_detalle();
         });
     });
 </script>
