@@ -1,6 +1,8 @@
 {% extends 'base/base.html' %}
 
 {% block page_content %}
+<form method="post" id="frmFacturas">
+    {% csrf_token %}
 <div class="card shadow mb-4">
     <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
         <a href="#" class="btn btn-danger">Guardar</a>
@@ -101,7 +103,7 @@
                             <input type="number" class="form-control" name="descuento_detalle" id="descuento_detalle" placeholder="Descuento">
                         </div>
                         <div class="col-lg-1">
-                            <button type="button" class="btn btn-danger" id="btnGuardar"> <i class="far fa-plus-square"></i> </button>
+                            <button type="submit" class="btn btn-danger" id="btnGuardar"> <i class="far fa-plus-square"></i> </button>
                         </div>
                     </div>
                     <div class="row p-1">
@@ -146,7 +148,7 @@
                             <th class="all">Acciones</th>
                         </thead>
                         <tbody>
-                            {% for item in obj%}
+                            {% for item in det%}
                             <tr>
                                 <td>{{ item.id }}</td>
                                 <td>{{ item.producto }}</td>
@@ -168,6 +170,7 @@
         </div>
     </div>
 </div>
+</form>
 {% endblock %}
 {% block js_page %}
 <script>
@@ -282,6 +285,7 @@
 
         $("#codigo").keypress(function(e){
             if(e.keyCode===13){
+                e.preventDefault();
                 buscarProducto();
             }
         });
