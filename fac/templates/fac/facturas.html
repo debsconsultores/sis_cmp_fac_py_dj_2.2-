@@ -148,10 +148,13 @@
                         <tbody>
                             {% for item in obj%}
                             <tr>
-                            <td>{{ item.id }}</td>
-                            <td>{{ item.cliente }}</td>
-                            <td>{{ item.total }}</td>
-                            <td>{{item.estado|yesno:"Activo,Inactivo"}}</td>
+                                <td>{{ item.id }}</td>
+                                <td>{{ item.producto }}</td>
+                                <td>{{ item.producto.descripcion }}</td>
+                                <td>{{ item.cantidad }}</td>
+                                <td>{{ item.sub_total }}</td>
+                                <td>{{ item.descuento }}</td>
+                                <td>{{ item.total }}</td>
                             <td>
                                 <button class="btn btn-warning btn-circle"><i class="far fa-edit"></i></button>
                             </td>
@@ -286,6 +289,14 @@
         $('#cantidad,#precio,#descuento_detalle').change(function(){
             calcular_detalle();
         });
+
+        $("#enc_id").val("{{ enc.id }}");
+        $("#enc_cliente").val("{{ enc.cliente.id }}").change();
+        $("#fecha").val("{{ enc.fecha|date:'Y-m-d' }}");
+        $("#sub_total").val("{{ enc.sub_total }}");
+        $("#descuento").val("{{ enc.descuento }}");
+        $("#total").val({{ enc.total }});
+
     });
 </script>
 {% endblock %}
