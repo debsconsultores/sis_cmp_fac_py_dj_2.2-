@@ -164,3 +164,13 @@ def facturas(request,id=None):
 class ProductoView(inv.ProductoView):
     template_name="fac/buscar_producto.html" 
 
+
+def borrar_detalle_factura(request, id):
+    template_name = "fac/factura_borrar_detalle.html"
+
+    det = FacturaDet.objects.get(pk=id)
+
+    if request.method=="GET":
+        context={"det":det}
+    
+    return render(request,template_name,context)
