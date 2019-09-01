@@ -8,6 +8,8 @@ from django.http import HttpResponse
 from datetime import datetime
 from django.contrib import messages
 
+from django.contrib.auth import authenticate
+
 from bases.views import SinPrivilegios
 
 from .models import Cliente, FacturaEnc, FacturaDet
@@ -79,7 +81,7 @@ class FacturaView(SinPrivilegios, generic.ListView):
 
 
 @login_required(login_url='/login/')
-@permission_required('fac.change_facturasenc', login_url='bases:sin_privilegios')
+@permission_required('fac.change_facturaenc', login_url='bases:sin_privilegios')
 def facturas(request,id=None):
     template_name='fac/facturas.html'
 
@@ -172,5 +174,29 @@ def borrar_detalle_factura(request, id):
 
     if request.method=="GET":
         context={"det":det}
+
+    if request.method == "POST":
+        usr = request.POST.get("usuario")
+        pas = request.POST.get("pass")
+
+        user =authenticate(username=usr,password=pas)
+
+        if not user:
+            return HttpResponse("Usuario o Clave Incorrecta")
+        
+        if not user.is_active:
+            return HttpResponse("Usuario Inactivo")
+
+        if user.is_superuser or user.has_perm("fac.sup_caja_facturadet"):
+            det.id = None
+            det.cantidad = (-1 * det.cantidad)
+            det.sub_total = (-1 * det.sub_total)
+            det.descuento = (-1 * det.descuento)
+            det.total = (-1 * det.total)
+            det.save()
+
+            return HttpResponse("ok")
+
+        return HttpResponse("Usuario no autorizado")
     
     return render(request,template_name,context)

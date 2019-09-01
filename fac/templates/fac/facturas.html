@@ -320,7 +320,55 @@
                 this.$content.find('#usuario').val('{{ user.username }}');
                 this.$content.find('#usuario').select();
                 this.$content.find('#usuario').focus();
-            }
+            },
+            buttons:{
+                borrar:{
+                    text:"Borrar",
+                    btnClass:"btn btn-danger",
+                    action: function(){
+                        var usuario = this.$content.find('input#usuario');
+	                    var pass = this.$content.find('input#password');
+
+                        if(!usuario.val().trim()){
+                            mensaje("Usuario es requerido",'red');
+                            return false;
+                        }
+
+                        if(!pass.val().trim()){
+                            // $.alert({
+                            //     title:"Error",
+                            //     content: "Contraseña es Requerida",
+                            //     type: 'red'
+                            // });
+                            mensaje("Contraseña es Requerida","red");
+                            return false;
+                        }
+
+                        var data = {"usuario":usuario.val(),"pass":pass.val()};
+	                    console.log(data);
+
+                        var token = '{{csrf_token}}';
+                        $.ajax({
+                            headers: { "X-CSRFToken": token },
+                            type:"POST",
+                            data:data,
+                            url: '/fac/facturas/borrar-detalle/' + id,
+                            success: function(r){
+                                console.log(r);
+                                if(r==="ok"){
+                                    location.reload(true);
+                                }else{
+                                    mensaje(r,'red');
+                                }
+                            },
+                            error: function(a,b,c){
+                                mensaje(c);
+                            }
+                        });
+                    }
+                    },
+                cancelar: function(){}
+                }
         });
     }
 </script>
