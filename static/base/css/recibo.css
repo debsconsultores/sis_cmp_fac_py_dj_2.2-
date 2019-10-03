@@ -1,0 +1,52 @@
+.table td .numero{
+    text-align: center;
+}
+
+body.receipt .sheet { width: 58mm;/* height: 100mm*/ } /* change height as you like */
+@media print { body.receipt { width: 58mm } } /*this line is needed for fixing Chrome's bug*/
+
+@media print and (max-width: 10cm) { }
+@page { margin: 15; }
+@media print{ max-width: 10cm;}
+@media screen {
+body { background: #e0e0e0 }
+.sheet {
+    background: white;
+    box-shadow: 0 .5mm 2mm rgba(0,0,0,.3);
+    margin: 5mm;
+}
+}
+.receipt {
+font: 12px, sans-serif, arial; /*editing to your whim, of course*/
+}
+
+body   { font-family: serif }
+h1     { font-family: 'Tangerine', cursive; font-size: 40pt; line-height: 18mm}
+h2, h3 { font-family: 'Tangerine', cursive; font-size: 24pt; line-height: 7mm }
+h4     { font-size: 32pt; line-height: 14mm }
+h2 + p { font-size: 18pt; line-height: 7mm }
+h3 + p { font-size: 14pt; line-height: 7mm }
+li     { font-size: 11pt; line-height: 5mm }
+h1      { margin: 0 }
+h1 + ul { margin: 2mm 0 5mm }
+h2, h3  { margin: 0 3mm 3mm 0; float: left }
+h2 + p,
+h3 + p  { margin: 0 0 3mm 50mm }
+/*h4      { margin: 2mm 0 0 50mm; border-bottom: 2px solid black }*/
+h4 + ul { margin: 5mm 0 0 50mm }
+article { border: 4px double black; padding: 5mm 10mm; border-radius: 3mm }
+
+.table-condensed>thead>tr>th, .table-condensed>tbody>tr>th, .table-condensed>tfoot>tr>th, .table-condensed>thead>tr>td, .table-condensed>tbody>tr>td, .table-condensed>tfoot>tr>td{
+    padding: 1px;
+    font-size: 10px;
+}
+.table-condensed, .table-sm{
+/*font-size: 10px;*/
+font: 8px, serif, arial;
+}
+th { font-size: 10pt; }
+td { font-size: 10pt; }
+
+.pie{
+    font-size: 7px;
+}
