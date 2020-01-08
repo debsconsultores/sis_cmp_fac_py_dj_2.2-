@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.views import generic
 from django.urls import reverse_lazy
 import datetime
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 from django.contrib.messages.views import SuccessMessageMixin
 from django.contrib.auth.decorators import login_required, permission_required
@@ -15,13 +15,14 @@ from cmp.forms import ProveedorForm,ComprasEncForm
 from bases.views import SinPrivilegios
 from inv.models import Producto
 
+
 class ProveedorView(SinPrivilegios, generic.ListView):
     model = Proveedor
     template_name = "cmp/proveedor_list.html"
     context_object_name = "obj"
     permission_required="cmp.view_proveedor"
 
-class ProveedorNew(SuccessMessageMixin,SinPrivilegios,\
+class ProveedorNew(SuccessMessageMixin, SinPrivilegios,\
                    generic.CreateView):
     model=Proveedor
     template_name="cmp/proveedor_form.html"
@@ -37,7 +38,7 @@ class ProveedorNew(SuccessMessageMixin,SinPrivilegios,\
         return super().form_valid(form)
 
 
-class ProveedorEdit(SuccessMessageMixin,SinPrivilegios,\
+class ProveedorEdit(SuccessMessageMixin, SinPrivilegios,\
                    generic.UpdateView):
     model=Proveedor
     template_name="cmp/proveedor_form.html"

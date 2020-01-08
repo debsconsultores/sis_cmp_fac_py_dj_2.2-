@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 from django.urls import reverse_lazy
 
 from django.contrib.auth.mixins import LoginRequiredMixin,\
@@ -7,7 +7,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin,\
 from django.views import generic
 
 
-class SinPrivilegios(LoginRequiredMixin, PermissionRequiredMixin):
+class MixinFormInvalid:
+    def form_invalid(self,form):
+        response = super().form_invalid(form)
+        if self.request.is_ajax():
+            return JsonResponse(form.errors, status=400)
+        else:
+            return response
+
+class SinPrivilegios(LoginRequiredMixin, PermissionRequiredMixin, MixinFormInvalid):
     login_url = 'bases:login'
     raise_exception=False
     redirect_field_name="redirecto_to"

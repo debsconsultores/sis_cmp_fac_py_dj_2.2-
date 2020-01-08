@@ -42,3 +42,34 @@
         </form>
     </div>
 </div> 
+
+<script>
+$(function() {
+
+    var url = $("form").attr("action");
+    var token = jQuery("[name=csrfmiddlewaretoken]").val();
+
+    $("form").submit(function(e){
+        e.preventDefault();
+        // alert(token);
+        var formData = $("form").serializeArray();
+        // console.log(formData);
+        $.ajax({
+            url:url,
+            method:"POST",
+            headers: {'X-CSRFToken': token },
+            data: formData
+        })
+        .done(function(r,textStatus,xhr){
+            if(xhr.status=200){
+                location.reload(true);
+            }
+            else{
+                mensaje(textStatus);
+            }
+        }).fail(function (error) {
+                mensaje(error.responseText);
+        });
+    });
+});
+</script>
