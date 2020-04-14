@@ -20,8 +20,85 @@
                         <div class="dropdown-divider"></div>
                         {% csrf_token %}
                         <div class="row">
-                            {{ form.as_p }}
+                            {#{ form.as_p }#}
                         </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-6">{{form.codigo.label}}</div>
+                                <div class="col-md-6">{{form.codigo}}</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="col-md-6">{{form.codigo_barra.label}}</div>
+                                <div class="col-md-6">{{form.codigo_barra}}</div>    
+                            </div>                            
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-6">{{form.descripcion.label}}</div>
+                                <div class="col-md-6">{{form.descripcion}}</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="col-md-6">{{form.estado.label}}</div>
+                                <div class="col-md-6">{{form.estado}}</div>    
+                            </div>                            
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-6">{{form.precio.label}}</div>
+                                <div class="col-md-6">{{form.precio}}</div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="col-md-6">{{form.existencia.label}}</div>
+                                <div class="col-md-6">{{form.existencia}}</div>    
+                            </div>                            
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="col-md-6">{{form.ultima_compra.label}}</div>
+                                <div class="col-md-6">{{form.ultima_compra}}</div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="col-md-6">{{form.marca.label}}</div>
+                                <div class="col-md-6">{{form.marca}}</div>    
+                            </div>     
+                            <div class="col-md-4">
+                                <div class="col-md-6">{{form.unidad_medida.label}}</div>
+                                <div class="col-md-6">{{form.unidad_medida}}</div>    
+                            </div>                        
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="col-md-6">Categoría</div>
+                                <div class="col-md-6">
+                                    <select name="categoria" id="id_categoria" class="form-control from-control-sm">
+                                        <option value="0">-------</option>
+                                        {% for item in categorias %}
+                                        <option value="{{item.id}}">{{item.descripcion}}</option>
+                                        {% endfor%}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="col-md-6">Sub Categoría</div>
+                                <div class="col-md-6">
+                                    <select name="subcategoria" id="id_subcategoria" class="form-control from-control-sm">
+                                        <option value="0">-------</option>
+                                        {% for item in subcategorias %}
+                                        <option value="{{item.id}}" data-chained="{{item.categoria.id}}">{{item.descripcion}}</option>
+                                        {% endfor%}
+                                    </select>
+                                </div>
+                            </div>                           
+                        </div>
+
                         <div class="dropdown-divider"></div>
                         <div class="row">
                             <div class="col">
@@ -43,3 +120,11 @@
         </form>
     </div>
 </div>
+
+<script>
+    $(function() {
+        $("#id_categoria").val("{{ obj.subcategoria.categoria.id }}").change();
+        $("#id_subcategoria").val("{{ obj.subcategoria.id }}").change();
+        $("#id_subcategoria").chained("#id_categoria");
+    });
+</script>

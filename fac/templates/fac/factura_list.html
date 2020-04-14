@@ -17,6 +17,20 @@
   </div>
   <!-- Card Body -->
   <div class="card-body">
+    <div class="row">
+      <div class="col-md-4">
+        <input type="text" class="form-class" name="f1" id="f1" readonly>
+      </div>
+      <div class="col-md-4">
+        <input type="text" class="form-class" name="f2" id="f2" readonly>
+      </div>
+      <div class="col-md-4">
+        <button class="btn btn-warning" type="button" id="btnPrint">Imprimir</button>
+      </div>
+    </div>
+    <hr>
+
+    
     {% if not obj %}
     <div class="alert alert-info">No Hay Facturas</div>
     {% endif %}
@@ -65,6 +79,30 @@
 {% endblock %}
 {% block js_page %}
 <script>
+$(function(){
+  $("#f1, #f2").datetimepicker({
+      format: 'Y-m-d',
+      timepicker:false
+  });
 
+  $("#btnPrint").click(function(e){
+    e.preventDefault();
+    var f1,f2;
+    f1 = $("#f1").val();
+    f2 = $("#f2").val();
+    if(f1=="" || f1==null){
+      f1="2019-06-01";
+    }
+    if(f2=="" || f2==null){
+      var d = new Date();
+      var f2 = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate();
+    }
+    
+    var url = "imprimir-todas/" + f1 + "/" + f2;
+
+    window.open(url,'facturas');
+    
+  });
+});
 </script>
 {% endblock %}
