@@ -19,6 +19,6 @@
 
 ☞ Entity FrameWork para principiantes (Hasta 60%)
 
-##  [Más Cursos y Descuentos oficial de Udemy](https://goo.gl/JndrRP) 
+##  [Más Cursos y Descuentos al precio oficial de Udemy](https://mailchi.mp/1fc9a9e05a5c/debs-8-cursos-oficial) 
 
 ## ☝ ☝ ☝ ☝ ☝ ☝ ☝☝
