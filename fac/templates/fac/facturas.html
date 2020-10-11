@@ -95,6 +95,7 @@
                         <div class="col-lg-1">Cant</div>
                         <div class="col-lg-3">
                             <input type="number" class="form-control" name="cantidad" id="cantidad" placeholder="Cantidad">
+                            <input type="hidden" class="form-control" name="existencia" id="existencia">
                         </div>
                         <div class="col-lg-4">
                             <input type="number" class="form-control" name="precio" id="precio" placeholder="Precio" readonly>
@@ -247,6 +248,7 @@
                 $("#codigo").val(r.codigo);
                 $("#descripcion").val(r.descripcion);
                 $("#precio").val(r.precio);
+                $("#existencia").val(r.existencia);
                 $("#cantidad").focus();
 
             },
@@ -371,5 +373,16 @@
                 }
         });
     }
+
+    $("form").submit(function(e){
+        var existencia = +$("#existencia").val();
+        var cantidad = +$("#cantidad").val();
+
+        if(cantidad>existencia){
+            mensaje("No hay existencia suficiente");
+            return false;
+        }
+    })
+
 </script>
 {% endblock %}
