@@ -306,6 +306,12 @@
         $("#descuento").val("{{ enc.descuento }}");
         $("#total").val({{ enc.total }});
 
+        // $('#enc_cliente').select2().select2('val', $('#enc_cliente option:eq(1)').val());
+        // https://select2.org/programmatic-control/add-select-clear-items
+        $("#enc_cliente").data('select2').trigger('select', {
+            data: {"id": 3}
+        });
+
     });
 
     function borrar_detalle(id)
