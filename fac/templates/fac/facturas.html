@@ -25,12 +25,25 @@
                                 Cliente:
                             </div>
                             <div class="col-lg-5 form-group">
-                                <select name="enc_cliente" id="enc_cliente" class="form-control">
+                                <!-- <select name="enc_cliente" id="enc_cliente" class="form-control">
                                     <option value="0">Seleccione Cliente</option>
                                     {% for item in clientes %}
                                         <option value="{{item.id}}">{{ item.nombres }} {{item.apellidos}} </option>
                                     {% endfor %}
-                                </select>
+                                </select> -->
+                                <div class="row">
+                                    <div class="col-lg-11 col-md-11">
+                                        <select name="enc_cliente" id="enc_cliente" class="form-control">
+                                            <option value="0">Seleccione Cliente</option>
+                                            {% for item in clientes %}
+                                                <option value="{{item.id}}">{{ item.nombres }} {{item.apellidos}} </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-1 col-md-1">
+                                        <button class="btn btn-outline-danger btn-sm" id="btnEditCliente"><i class="far fa-edit"></i></button>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
@@ -389,6 +402,26 @@
             return false;
         }
     })
+
+    $("#btnEditCliente").click(function(e){
+        e.preventDefault();
+
+        var idCliente = $("#enc_cliente").val();
+        var url;
+        const qs = "?t=fc";
+        // alert(idCliente)
+
+        if(idCliente===null || idCliente===undefined){
+            url = "/fac/clientes/new" + qs;
+            //alert(url);
+            abrir_modal(url);
+        }else{
+            url = "/fac/clientes/" + idCliente + qs;
+            //alert(url);
+            abrir_modal(url);
+        }
+        var token = '{{csrf_token}}';
+    });
 
 </script>
 {% endblock %}
