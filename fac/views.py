@@ -110,6 +110,21 @@ class FacturaView(SinPrivilegios, generic.ListView):
     context_object_name = "obj"
     permission_required="fac.view_facturaenc"
 
+    def get_queryset(self):
+        user = self.request.user
+        # print(user,"usuario")
+        qs = super().get_queryset()
+        for q in qs:
+            print(q.uc,q.id)
+        
+        if not user.is_superuser:
+            qs = qs.filter(uc=user)
+
+        for q in qs:
+            print(q.uc,q.id)
+
+        return qs
+
 
 @login_required(login_url='/login/')
 @permission_required('fac.change_facturaenc', login_url='bases:sin_privilegios')
@@ -121,6 +136,17 @@ def facturas(request,id=None):
     
     if request.method == "GET":
         enc = FacturaEnc.objects.filter(pk=id).first()
+        if id:
+            if not enc:
+                messages.error(request,'Factura No Existe')
+                return redirect("fac:factura_list")
+
+            usr = request.user
+            if not usr.is_superuser:
+                if enc.uc != usr:
+                    messages.error(request,'Factura no fue creada por usuario')
+                    return redirect("fac:factura_list")
+
         if not enc:
             encabezado = {
                 'id':0,
