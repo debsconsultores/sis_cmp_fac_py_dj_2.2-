@@ -107,6 +107,8 @@
             {% if perms.fac.view_cliente %}
             <a class="collapse-item" href="{% url 'fac:cliente_list' %}">Clientes</a>
             {% endif %}
+            <a class="collapse-item" href="{% url 'bases:idiomas' %}">Idiomas</a>
+            <a class="collapse-item" href="{% url 'bases:frases' %}">Frases</a>
           </div>
         </div>
       </li>
