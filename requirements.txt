@@ -9,7 +9,7 @@ html5lib==1.0.1
 isort==4.3.21
 lazy-object-proxy==1.4.3
 mccabe==0.6.1
-Pillow==7.1.0
+Pillow==8.1.1
 psycopg2==2.8.4
 pylint==2.4.4
 PyPDF2==1.26.0
