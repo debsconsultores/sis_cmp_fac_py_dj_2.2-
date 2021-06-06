@@ -1,9 +1,9 @@
 <div class="modal-dialog modal-lg">
     <div class="modal-content">
         {% if obj %}
-        <form method="POST" role="form" class="form-inline" action="{% url 'inv:producto_edit' obj.pk %}" >
+        <form method="POST" role="form" class="form-inline" action="{% url 'inv:producto_edit' obj.pk %}" enctype="multipart/form-data" >
         {% else %}
-        <form method="POST" role="form" class="form-inline" action="{% url 'inv:producto_new' %}" >
+        <form method="POST" role="form" class="form-inline" action="{% url 'inv:producto_new' %}"  enctype="multipart/form-data" >
         {% endif %}
             <div class="col-xl-12 col-md-12 mb-12">
                 {% if obj %}
@@ -97,6 +97,22 @@
                                     </select>
                                 </div>
                             </div>                           
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="col-md-2">
+                                    {{form.foto.label}}
+                                </div>
+                                <div class="col-md-8">
+                                    {% if obj.foto %}
+                                    <img src="{{obj.foto.url}}" width="100%" alt="">
+                                    {% endif %}
+                                </div>
+                                <!-- <div class="col-md-4">{{form.foto}}</div> -->
+                                <div class="col-md-2">
+                                    <input type="file" name="foto" id="id_foto" accept="image/*">
+                                </div>
+                            </div>
                         </div>
 
                         <div class="dropdown-divider"></div>

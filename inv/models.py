@@ -89,6 +89,7 @@ class Producto(ClaseModelo):
     marca = models.ForeignKey(Marca, on_delete=models.CASCADE)
     unidad_medida = models.ForeignKey(UnidadMedida, on_delete=models.CASCADE)
     subcategoria = models.ForeignKey(SubCategoria, on_delete=models.CASCADE)
+    foto = models.ImageField(upload_to="images/",null=True,blank=True)
 
     def __str__(self):
         return '{}'.format(self.descripcion)
