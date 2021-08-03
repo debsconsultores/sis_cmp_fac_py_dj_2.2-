@@ -257,3 +257,52 @@ def borrar_detalle_factura(request, id):
         return HttpResponse("Usuario no autorizado")
     
     return render(request,template_name,context)
+
+
+@login_required(login_url="/login/")
+@permission_required("fac.change_cliente",login_url="/login/")
+def cliente_add_modify(request,pk=None):
+    template_name="fac/cliente_form.html"
+    context = {}
+
+    if request.method=="GET":
+        context["t"]="fc"
+        if not pk:
+            form = ClienteForm()
+        else:
+            cliente = Cliente.objects.filter(id=pk).first()
+            form = ClienteForm(instance=cliente)
+            context["obj"]=cliente
+        context["form"] = form
+    else:
+        nombres = request.POST.get("nombres")
+        apellidos = request.POST.get("apellidos")
+        celular = request.POST.get("celular")
+        tipo = request.POST.get("tipo")
+        usr = request.user
+
+        if not pk:
+            cliente = Cliente.objects.create(
+                nombres=nombres,
+                apellidos=apellidos,
+                celular = celular,
+                tipo = tipo,
+                uc=usr,
+            )
+        else:
+            cliente = Cliente.objects.filter(id=pk).first()
+            cliente.nombres=nombres
+            cliente.apellidos=apellidos
+            cliente.celular = celular
+            cliente.tipo = tipo
+            cliente.um=usr.id
+
+        cliente.save()
+        if not cliente:
+            return HttpResponse("No pude Guardar/Crear Cliente")
+        
+        id = cliente.id
+        return HttpResponse(id)
+    
+    return render(request,template_name,context)
+    

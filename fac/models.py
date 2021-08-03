@@ -35,10 +35,10 @@ class Cliente(ClaseModelo):
     def __str__(self):
         return '{} {}'.format(self.apellidos,self.nombres)
 
-    def save(self):
+    def save(self, *args, **kwargs):
         self.nombres = self.nombres.upper()
         self.apellidos = self.apellidos.upper()
-        super(Cliente, self).save()
+        super(Cliente, self).save( *args, **kwargs)
 
     class Meta:
         verbose_name_plural = "Clientes"

@@ -411,17 +411,41 @@
         const qs = "?t=fc";
         // alert(idCliente)
 
-        if(idCliente===null || idCliente===undefined){
-            url = "/fac/clientes/new" + qs;
+        if(idCliente===null || idCliente===undefined || idCliente==0){
+            // url = "/fac/clientes/new" + qs;
+            url = "{% url 'fac:fac_cliente_add' %}" + qs
             //alert(url);
-            abrir_modal(url);
+            // abrir_modal(url);
         }else{
-            url = "/fac/clientes/" + idCliente + qs;
+            url = "/fac/facturas/clientes/" + idCliente + qs;
             //alert(url);
-            abrir_modal(url);
+            // abrir_modal(url);
         }
+        abrir_modal(url);
         var token = '{{csrf_token}}';
     });
 
+$("#popup").on('hidden.bs.modal',function(){
+    const a = $("#id").val()
+    // alert(a)
+    var url="{% url 'api:cliente_list' %}"
+    $.ajax({
+        type:"GET",
+        url:url,
+        success: function(data){
+            console.log(data)
+            $("#enc_cliente").find('option').remove()
+            $("#enc_cliente").append('<option value="0">Seleccione Cliente</option>')
+            for(var i=0;i<data.length;i++){
+                $("#enc_cliente").append(`<option value="${data[i].id}">${data[i].nombres} ${data[i].apellidos} </option>`)
+            }
+            $("#enc_cliente").val(a).change()
+        },
+        error: function(data){
+            console.log(data)
+        }
+    })
+    return false
+})
 </script>
 {% endblock %}

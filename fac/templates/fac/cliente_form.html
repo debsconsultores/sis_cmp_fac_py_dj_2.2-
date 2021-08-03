@@ -21,6 +21,7 @@
                         <div class="dropdown-divider"></div>
                         {% csrf_token %}
                         <div class="row">
+                            <input type="hidden" name="id" id="id" class="form-class frmid">
                             {{ form.as_p }}
                         </div>
                         <div class="dropdown-divider"></div>
@@ -48,16 +49,22 @@
 <script>
 $("#frmCliente").submit(function( e ) {
     var frm = $('#frmCliente');
+    // alert("{{request.path}}")
     $.ajax({
             type: frm.attr('method'),
-            url: frm.attr('action'),
+            // url: frm.attr('action'),
+            url: "{{request.path}}",
             data: frm.serialize(),
             success: function (data) {
                 // alert(data);
-                window.location.reload(true);
+                // window.location.reload(true);
+                $("#id").val(data)
+                console.log(data)
+                cerrar_modal()
             },
-            error: function(data) {
+            error: function(data,b,c) {
                 alert(data);
+                console.log(c)
             }
         });
         return false;

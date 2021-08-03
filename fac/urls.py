@@ -3,7 +3,8 @@ from django.urls import path, include
 from .views import ClienteView,ClienteNew,ClienteEdit,clienteInactivar, \
     FacturaView, facturas, \
     ProductoView, \
-    borrar_detalle_factura
+    borrar_detalle_factura, \
+    cliente_add_modify
 
 from .reportes import imprimir_factura_recibo, imprimir_factura_list
 
@@ -25,6 +26,7 @@ urlpatterns = [
 
     path('facturas/imprimir-todas/<str:f1>/<str:f2>',imprimir_factura_list, name="factura_imprimir_all"),
 
-
+    path('facturas/clientes/new/',cliente_add_modify,name="fac_cliente_add"),
+    path('facturas/clientes/<int:pk>',cliente_add_modify,name="fac_cliente_mod"),
 
 ]
